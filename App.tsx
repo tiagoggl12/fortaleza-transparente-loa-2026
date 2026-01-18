@@ -1,18 +1,19 @@
 
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  TrendingUp, 
-  PieChart as PieChartIcon, 
-  Map as MapIcon, 
-  Users, 
+import {
+  LayoutDashboard,
+  TrendingUp,
+  PieChart as PieChartIcon,
+  Map as MapIcon,
+  Users,
   Search,
   Menu,
   X,
   Building2,
   Calendar,
   ChevronRight,
-  BookOpen
+  BookOpen,
+  MessageSquare
 } from 'lucide-react';
 import { ViewType } from './types';
 import DashboardView from './components/DashboardView';
@@ -20,6 +21,7 @@ import RevenueView from './components/RevenueView';
 import ExpenseView from './components/ExpenseView';
 import RegionalView from './components/RegionalView';
 import ParticipatoryView from './components/ParticipatoryView';
+import ChatView from './components/ChatView';
 import GlossarySidebar from './components/glossary/GlossarySidebar';
 import { useGlossary } from './hooks/useGlossary';
 
@@ -34,6 +36,7 @@ const App: React.FC = () => {
     { id: 'expense', label: 'Despesas', icon: PieChartIcon },
     { id: 'regional', label: 'Investimento Regional', icon: MapIcon },
     { id: 'participatory', label: 'Participação Social', icon: Users },
+    { id: 'chat', label: 'Assistente LOA', icon: MessageSquare },
   ];
 
   return (
@@ -146,6 +149,7 @@ const App: React.FC = () => {
           {activeView === 'expense' && <ExpenseView />}
           {activeView === 'regional' && <RegionalView />}
           {activeView === 'participatory' && <ParticipatoryView />}
+          {activeView === 'chat' && <ChatView />}
         </div>
       </main>
       
