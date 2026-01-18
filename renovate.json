@@ -1,0 +1,79 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":automergeDigest",
+    ":automergeBranchPush",
+    "group:all",
+    "schedule:weekly"
+  ],
+  "timezone": "America/Fortaleza",
+  "labels": ["dependencies", "renovate"],
+  "assignees": [],
+  "reviewers": [],
+  "packageRules": [
+    {
+      "description": "Automerge non-major dev dependencies",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "description": "Automerge @types/* packages",
+      "matchPackagePatterns": ["^@types/"],
+      "automerge": true
+    },
+    {
+      "description": "Group ESLint packages",
+      "matchPackagePatterns": ["^eslint", "^@typescript-eslint/", "^typescript-eslint"],
+      "groupName": "eslint packages",
+      "automerge": true
+    },
+    {
+      "description": "Group React packages",
+      "matchPackagePatterns": ["^react", "^@vitejs/"],
+      "groupName": "react packages"
+    },
+    {
+      "description": "Group Vite packages",
+      "matchPackagePatterns": ["^vite"],
+      "groupName": "vite packages",
+      "automerge": true
+    },
+    {
+      "description": "Use separate PR for major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "renovate", "major-update"]
+    },
+    {
+      "description": "Disable updates for node",
+      "matchPackageNames": ["node"],
+      "enabled": false
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "labels": ["security", "renovate"],
+    "automerge": true,
+    "assignees": []
+  },
+  "prConcurrentLimit": 3,
+  "prCreation": "not-pending",
+  "rebaseWhen": "behind-base-branch",
+  "commitMessagePrefix": "chore(deps)",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+  "semanticCommitScope": "deps",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 3am on Monday"]
+  },
+  "postUpdateOptions": [
+    "npmDedupe",
+    "yarnDedupeHighest"
+  ],
+  "platformCommit": true,
+  "platformAutomerge": true
+}

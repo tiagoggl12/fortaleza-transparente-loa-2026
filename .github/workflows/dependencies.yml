@@ -1,14 +1,119 @@
-name: Dependencies
+name: Dependency Management
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Weekly on Sunday
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight
   workflow_dispatch:
+    inputs:
+      lock-file-only:
+        description: 'Only update lock file (npm ci)'
+        type: boolean
+        default: false
+      type:
+        description: 'Update type'
+        type: choice
+        options:
+          - all
+          - prod
+          - dev
+        default: 'all'
+
+env:
+  NODE_VERSION: '22'
 
 jobs:
+  # Update dependencies using npm
   update:
     name: Update Dependencies
     runs-on: ubuntu-latest
+    if: github.repository == 'tiagofreire/fortaleza-transparente---ploa-2026'
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update dependencies
+        id: update
+        run: |
+          if [ "${{ github.event.inputs.lock-file-only }}" != "true" ]; then
+            if [ "${{ github.event.inputs.type }}" == "prod" ] || [ "${{ github.event.inputs.type }}" == "all" ]; then
+              npm update $(npm ls --json --depth=0 | jq -r '.dependencies | keys[]')
+            fi
+            if [ "${{ github.event.inputs.type }}" == "dev" ] || [ "${{ github.event.inputs.type }}" == "all" ]; then
+              npm update $(npm ls --json --depth=0 | jq -r '.devDependencies | keys[]')
+            fi
+          fi
+          npm ci
+          npm audit fix || true
+
+      - name: Verify changes
+        run: |
+          npm run typecheck
+          npm run lint
+          npm run build
+
+      - name: Check for updates
+        id: check
+        run: |
+          if ! git diff --quiet; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: 'chore(deps): update dependencies'
+          body: |
+            ## Automated Dependency Update
+
+            This PR updates dependencies to their latest versions.
+
+            ### Changes
+            - Updated production and development dependencies
+            - Ran `npm audit fix` for security updates
+            - Verified type checking, linting, and build
+
+            ### Checklist
+            - [ ] All tests pass
+            - [ ] No breaking changes detected
+            - [ ] Ready for review and merge
+
+            ---
+            _This PR was created by the Dependency Management workflow_
+          branch: dependencies/update
+          commit-message: 'chore(deps): update dependencies'
+          labels: |
+            dependencies
+            automated
+          reviewers: |
+          draft: false
+          assignees: ${{ github.actor }}
+
+  # Security audit
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,24 +121,184 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      - name: Update dependencies
-        run: |
-          npm update
-          npm audit fix || true
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Run tests
+      - name: Run npm audit
+        id: audit
         run: |
-          npm run typecheck || true
-          npm run build || true
+          mkdir -p audit-results
+          npm audit --production --json > audit-results/audit.json || true
+          npm audit --production --parseable > audit-results/audit.txt || true
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
+      - name: Check for vulnerabilities
+        id: vulns
+        run: |
+          VULNS=$(jq -r '.metadata.vulnerabilities | map(select(.severity == "high" or .severity == "critical")) | length' audit-results/audit.json || echo "0")
+          echo "vulnerabilities=$VULNS" >> $GITHUB_OUTPUT
+
+          if [ "$VULNS" -gt 0 ]; then
+            echo "has_vulnerabilities=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_vulnerabilities=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create security issue
+        if: steps.vulns.outputs.has_vulnerabilities == 'true'
+        uses: actions/github-script@v7
         with:
-          title: 'chore: update dependencies'
-          body: 'Automated dependency update'
-          branch: dependencies/update
-          commit-message: 'chore: update dependencies'
-          labels: dependencies, automated
+          script: |
+            const fs = require('fs');
+            const auditData = JSON.parse(fs.readFileSync('audit-results/audit.json', 'utf8'));
+            const vulns = auditData.metadata.vulnerabilities;
+
+            const body = `## Security Vulnerabilities Detected
+
+            This issue was automatically created by the Dependency Management workflow.
+
+            ### Summary
+            - **Critical**: ${vulns.critical || 0}
+            - **High**: ${vulns.high || 0}
+            - **Moderate**: ${vulns.moderate || 0}
+            - **Low**: ${vulns.low || 0}
+
+            ### Recommendations
+            1. Review the vulnerabilities listed below
+            2. Update affected packages
+            3. Run \`npm audit fix\` to apply automatic fixes
+            4. Test thoroughly after applying updates
+
+            ### Audit Report
+            \`\`\`
+            ${fs.readFileSync('audit-results/audit.txt', 'utf8')}
+            \`\`\`
+            `;
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'security,dependencies'
+            });
+
+            const existingIssue = issues.find(i => i.title.includes('Security Vulnerabilities'));
+
+            if (existingIssue) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `## Update\n\n${body}`
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: 'Security Vulnerabilities Detected',
+                body: body,
+                labels: ['security', 'dependencies', 'automated']
+              });
+            }
+
+      - name: Upload audit results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-audit-results
+          path: audit-results/
+          retention-days: 30
+
+  # License check
+  license-check:
+    name: License Compliance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install license-checker
+        run: npm install -g license-checker
+
+      - name: Check licenses
+        id: license
+        run: |
+          mkdir -p license-results
+          license-checker --production --json > license-results/licenses.json || true
+          license-checker --production --plain > license-results/licenses.txt || true
+
+      - name: Check for non-compliant licenses
+        run: |
+          # Define allowed licenses
+          ALLOWED="MIT|Apache-2.0|BSD-3-Clause|BSD-2-Clause|ISC|0BSD"
+
+          # Check for non-compliant licenses
+          if grep -vE "$ALLOWED" license-results/licenses.txt; then
+            echo "Non-compliant licenses found!"
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Upload license results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: license-check-results
+          path: license-results/
+          retention-days: 30
+
+  # Outdated packages check
+  outdated-check:
+    name: Check Outdated Packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for outdated packages
+        id: outdated
+        run: |
+          npm outdated --json > outdated.json || true
+
+          # Count outdated packages
+          OUTDATED=$(jq 'length' outdated.json || echo "0")
+          echo "outdated_count=$OUTDATED" >> $GITHUB_OUTPUT
+
+          if [ "$OUTDATED" -gt 0 ]; then
+            echo "### Outdated Packages ($OUTDATED)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "| Package | Current | Wanted | Latest | Type |" >> $GITHUB_STEP_SUMMARY
+            echo "|---------|---------|--------|--------|------|" >> $GITHUB_STEP_SUMMARY
+
+            jq -r '. | to_entries[] | "| \(.key) | \(.value.current) | \(.value.wanted) | \(.value.latest) | \(.value.type) |"' outdated.json >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Upload outdated results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: outdated-packages
+          path: outdated.json
+          retention-days: 30
