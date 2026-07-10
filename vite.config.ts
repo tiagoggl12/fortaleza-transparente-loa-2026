@@ -5,17 +5,14 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    // Base path for GitHub Pages
-    base: mode === 'production' ? '/fortaleza-transparente-loa-2026/' : '/',
+    // Base path: subcaminho apenas no GitHub Pages (via env GITHUB_PAGES);
+    // em outros hosts (Railway, Docker) os assets ficam na raiz.
+    base: env.GITHUB_PAGES === 'true' ? '/fortaleza-transparente-loa-2026/' : '/',
     server: {
       port: 3000,
       host: '0.0.0.0',
     },
     plugins: [react()],
-    define: {
-      'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
-    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
@@ -23,7 +20,7 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'dist',
-      sourcemap: true,
+      sourcemap: mode !== 'production',
     }
   };
 });
