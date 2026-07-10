@@ -55,8 +55,8 @@ export const GLOSSARIO_CONCEITOS: ConceitoOrçamentário[] = [
     essencial: 'Ajuda que a prefeitura recebe de Brasília e do Estado',
     detalhado: 'Dinheiro que vem da União (governo federal) e do Estado do Ceará por determinação constitucional. Inclui o FPM (Fundo de Participação dos Municípios) e parte do ICMS (imposto sobre circulação de mercadorias). É como se Fortaleza recebesse uma mesada garantida por lei.',
     exemplos: [
-      'FPM: R$ 50 milhões por mês para saúde e educação',
-      'ICMS: R$ 30 milhões para manutenção de vias',
+      'FPM: R$ 2,14 bilhões previstos em 2026 (cota mensal)',
+      'ICMS: R$ 1,37 bilhão de cota-parte previsto em 2026',
       'Cota-parte da União para programas federais na cidade'
     ],
     impactoReal: 'Mais da metade do dinheiro da prefeitura vem dessas transferências, pagando grande parte dos professores e médicos.',
