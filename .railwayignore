@@ -1,0 +1,12 @@
+# Não enviar ao build do Railway (o frontend não precisa deles)
+Arquivo completo LOA 2026/
+Logos/
+backend/
+venv/
+chroma_db/
+chroma_database/
+node_modules/
+dist/
+*.py
+*.log
+.git/
