@@ -53,13 +53,20 @@ const RegionalView: React.FC = () => {
   const [activeModal, setActiveModal] = useState<RegionalData | null>(null);
   const sortedRegionals = [...REGIONALS].sort((a, b) => b.total - a.total);
 
-  // Simulação de distribuição de gastos para o modal
-  const getMockedDistribution = (reg: RegionalData) => [
-    { name: 'Infraestrutura', value: reg.total * 0.4, fill: '#d97706' },
-    { name: 'Educação', value: reg.total * 0.25, fill: '#9333ea' },
-    { name: 'Saúde', value: reg.total * 0.2, fill: '#dc2626' },
-    { name: 'Social', value: reg.total * 0.15, fill: '#2563eb' },
-  ];
+  // Soma oficial dos orçamentos das 12 regionais (demonstrativo por região da LOA 2026)
+  const totalRegionalizado = REGIONALS.reduce((acc, r) => acc + r.total, 0);
+  const totalRegionalizadoCompact = new Intl.NumberFormat('pt-BR', {
+    style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 2
+  }).format(totalRegionalizado);
+
+  // Distribuição real dos projetos em destaque por categoria (contagem)
+  const getCategoryDistribution = (reg: RegionalData) => {
+    const counts: Record<string, number> = {};
+    reg.projects.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+    return Object.entries(counts).map(([name, value]) => ({
+      name, value, fill: getCategoryStyles(name as RegionalProject['category']).colorHex
+    }));
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700 pb-20">
@@ -73,12 +80,12 @@ const RegionalView: React.FC = () => {
             </div>
             <h3 className="text-4xl font-black">Investimento Regionalizado</h3>
             <p className="text-blue-100 max-w-xl text-sm leading-relaxed">
-              Descubra como os R$ 3,92 Bilhões da LOA 2026 são aplicados em cada território para reduzir as desigualdades sociais de Fortaleza.
+              Descubra como os {totalRegionalizadoCompact} da LOA 2026 são aplicados em cada território para reduzir as desigualdades sociais de Fortaleza.
             </p>
           </div>
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl">
             <p className="text-xs font-bold text-blue-200 uppercase mb-1">Total para as Regionais</p>
-            <p className="text-4xl font-black tracking-tighter">R$ 3,92B</p>
+            <p className="text-4xl font-black tracking-tighter">{totalRegionalizadoCompact}</p>
           </div>
         </div>
         <MapIcon className="absolute -right-12 -bottom-12 w-64 h-64 text-white opacity-5" />
@@ -186,35 +193,35 @@ const RegionalView: React.FC = () => {
                 {/* Financeiro */}
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Divisão por Área de Atuação</h4>
+                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-4">Projetos em Destaque por Categoria</h4>
                     <div className="h-[200px] w-full">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <Pie
-                            data={getMockedDistribution(activeModal)}
+                            data={getCategoryDistribution(activeModal)}
                             innerRadius={60}
                             outerRadius={80}
                             paddingAngle={5}
                             dataKey="value"
                           >
-                            {getMockedDistribution(activeModal).map((entry, index) => (
+                            {getCategoryDistribution(activeModal).map((entry, index) => (
                               <Cell key={`cell-${index}`} fill={entry.fill} />
                             ))}
                           </Pie>
-                          <Tooltip formatter={(val: number | undefined) => val ? formatCurrency(val) : ''} />
+                          <Tooltip formatter={(val: number | undefined) => val ? `${val} projeto${val > 1 ? 's' : ''}` : ''} />
                         </PieChart>
                       </ResponsiveContainer>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3">
-                    {getMockedDistribution(activeModal).map((item, i) => (
+                    {getCategoryDistribution(activeModal).map((item, i) => (
                       <div key={i} className="flex justify-between items-center p-3 rounded-xl bg-gray-50 border border-gray-100">
                         <div className="flex items-center gap-2">
                           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.fill }} />
                           <span className="text-sm font-bold text-gray-700">{item.name}</span>
                         </div>
-                        <span className="text-sm font-black text-gray-900">{formatCurrency(item.value)}</span>
+                        <span className="text-sm font-black text-gray-900">{item.value} projeto{item.value > 1 ? 's' : ''}</span>
                       </div>
                     ))}
                   </div>
@@ -284,7 +291,7 @@ const RegionalView: React.FC = () => {
         <div>
           <h5 className="font-bold text-amber-900 text-lg uppercase mb-2 tracking-tighter">Sobre a Regionalização dos Recursos</h5>
           <p className="text-sm text-amber-800 leading-relaxed">
-            A distribuição orçamentária por Regional em Fortaleza não é aleatória. Ela utiliza a metodologia do <strong>Índice de Vulnerabilidade Multidimensional</strong>. Isso significa que bairros com menores indicadores de saneamento, iluminação e renda recebem aportes prioritários para que toda a cidade cresça de forma equilibrada.
+            A LOA 2026 foi elaborada com <strong>escuta social nos 39 territórios</strong> de Fortaleza, por meio de fóruns presenciais e virtuais que priorizaram 12 temas estruturantes. As demandas da população subsidiaram as ações regionalizadas, e cada órgão registrou no sistema de planejamento (SIOPFOR) a origem participativa das ações — garantindo rastreabilidade entre a demanda do cidadão e o orçamento.
           </p>
           <div className="mt-4 flex flex-wrap gap-4">
             <div className="flex items-center gap-2 text-xs font-bold text-amber-900 bg-amber-200/50 px-3 py-1.5 rounded-lg">
