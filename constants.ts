@@ -1,10 +1,12 @@
 
 import { BudgetUnit, ProgramData, RevenueCategory, RegionalData } from './types';
 
+// Fonte: Lei nº 11.615, de 23 de dezembro de 2025 (LOA 2026 sancionada)
 export const TOTAL_BUDGET = 15991418235;
-export const FISCAL_BUDGET = 9779974931;
-export const SOCIAL_SECURITY_BUDGET = 6211443304;
+export const FISCAL_BUDGET = 9757239967;
+export const SOCIAL_SECURITY_BUDGET = 6234178268;
 
+// Anexo I — Receita por categoria econômica e origem (R$ 1,00)
 export const REVENUES: RevenueCategory[] = [
   { specification: 'Receitas Correntes', value: 15157116090 },
   { specification: 'Impostos, Taxas e Contribuições', value: 3921300248 },
@@ -15,65 +17,70 @@ export const REVENUES: RevenueCategory[] = [
   { specification: 'Outras Receitas Correntes', value: 613231441 },
   { specification: 'Receitas de Capital', value: 768234828 },
   { specification: 'Operações de Crédito', value: 716976312 },
+  { specification: 'Amortização de Empréstimos', value: 3918155 },
   { specification: 'Alienação de Bens', value: 13749642 },
+  { specification: 'Transferências de Capital', value: 33590719 },
+  { specification: 'Deduções da Receita Corrente', value: -828485248 },
+  { specification: 'Receitas Intraorçamentárias', value: 894552565 },
 ];
 
+// Anexo II — Despesa por Unidade Orçamentária (R$ 1,00)
 export const BUDGET_UNITS: BudgetUnit[] = [
   { name: 'Câmara Municipal', value: 363898545 },
   { name: 'Gabinete do Prefeito', value: 22450324 },
-  { name: 'Autarquia de Trânsito (AMC)', value: 274743583 },
+  { name: 'Autarquia de Trânsito (AMC)', value: 276523583 },
   { name: 'Sec. de Planejamento (SEPOG)', value: 649650203 },
   { name: 'Previdência (PREVFOR)', value: 1613372637 },
-  { name: 'Sec. de Conservação e Serviços Públicos', value: 530779955 },
-  { name: 'Fundo Municipal de Educação', value: 3833205305 },
-  { name: 'Fundo Municipal de Saúde', value: 2962721023 },
-  { name: 'Inst. Dr. José Frota (IJF)', value: 917144186 },
-  { name: 'Fundo de Assistência Social', value: 117499980 },
-  { name: 'Fundo de Limpeza Urbana', value: 597020538 },
-  { name: 'Sec. de Governo', value: 153965131 },
-  { name: 'Governança das Regionais', value: 304061747 },
-  { name: 'Sec. de Infraestrutura', value: 270290985 },
+  { name: 'Sec. de Conservação e Serviços Públicos', value: 531129955 },
+  { name: 'Fundo Municipal de Educação', value: 3833545305 },
+  { name: 'Fundo Municipal de Saúde', value: 2966653736 },
+  { name: 'Inst. Dr. José Frota (IJF)', value: 918469186 },
+  { name: 'Fundo de Assistência Social', value: 122417950 },
+  { name: 'Fundo de Limpeza Urbana', value: 597095538 },
+  { name: 'Sec. de Governo', value: 153565131 },
+  { name: 'Governança das Regionais', value: 311296799 },
+  { name: 'Sec. de Infraestrutura', value: 291347960 },
   { name: 'Sec. de Finanças', value: 150909664 },
 ];
 
 export const PROGRAMS: ProgramData[] = [
   { 
-    id: '0001', 
-    name: 'Gestão e Manutenção', 
-    total: 5038935657, 
-    fiscal: 2035422883, 
-    social: 3003512774,
+    id: '0001',
+    name: 'Gestão e Manutenção',
+    total: 5039877657,
+    fiscal: 2035899883,
+    social: 3003977774,
     objective: 'Garantir a continuidade dos serviços públicos e a manutenção administrativa de toda a estrutura municipal.'
   },
   { 
-    id: '0042', 
-    name: 'Ensino Fundamental', 
-    total: 2693655253, 
-    fiscal: 2693655253, 
+    id: '0042',
+    name: 'Ensino Fundamental',
+    total: 2696889253,
+    fiscal: 2696889253,
     social: 0,
     objective: 'Promover a universalização do acesso e a melhoria da qualidade do ensino, com foco na alfabetização e tempo integral.'
   },
   { 
-    id: '0119', 
-    name: 'Atenção Primária à Saúde', 
-    total: 969136415, 
-    fiscal: 0, 
-    social: 969136415,
+    id: '0119',
+    name: 'Atenção Primária à Saúde',
+    total: 974235557,
+    fiscal: 0,
+    social: 974235557,
     objective: 'Fortalecer as Unidades Básicas de Saúde, garantindo atendimento preventivo e acompanhamento familiar.'
   },
   { 
-    id: '0123', 
-    name: 'Atenção Especializada à Saúde', 
-    total: 1466590496, 
-    fiscal: 0, 
-    social: 1466590496,
+    id: '0123',
+    name: 'Atenção Especializada à Saúde',
+    total: 1473637351,
+    fiscal: 0,
+    social: 1473637351,
     objective: 'Assegurar o acesso a exames, consultas especializadas e procedimentos hospitalares de média e alta complexidade.'
   },
   { 
-    id: '0132', 
-    name: 'Fortaleza Iluminada', 
-    total: 206185037, 
-    fiscal: 206185037, 
+    id: '0132',
+    name: 'Fortaleza Iluminada',
+    total: 206275037,
+    fiscal: 206275037,
     social: 0,
     objective: 'Modernizar o parque de iluminação pública com tecnologia LED para aumentar a segurança e eficiência energética.'
   },
@@ -86,18 +93,18 @@ export const PROGRAMS: ProgramData[] = [
     objective: 'Cumprir obrigações financeiras da cidade, incluindo o pagamento de sentenças judiciais e encargos da dívida.'
   },
   { 
-    id: '0052', 
-    name: 'Educação Infantil', 
-    total: 660649435, 
-    fiscal: 660649435, 
+    id: '0052',
+    name: 'Educação Infantil',
+    total: 661849435,
+    fiscal: 661849435,
     social: 0,
     objective: 'Expandir a rede de creches e pré-escolas, priorizando comunidades com maior vulnerabilidade social.'
   },
   { 
-    id: '2123', 
-    name: 'Gestão Ambiental e Riscos', 
-    total: 809027204, 
-    fiscal: 809027204, 
+    id: '2123',
+    name: 'Gestão Ambiental e Riscos',
+    total: 812638630,
+    fiscal: 812638630,
     social: 0,
     objective: 'Preservar recursos naturais e implementar infraestrutura de drenagem para prevenir riscos de inundações.'
   },

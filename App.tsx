@@ -94,7 +94,7 @@ const App: React.FC = () => {
                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Exercício 2026</span>
               </div>
               <p className="text-xs text-gray-600 leading-relaxed">
-                Documento referenciado: Mensagem nº 55, de 15 de outubro de 2025.
+                Documento referenciado: Lei nº 11.615, de 23 de dezembro de 2025 (LOA 2026).
               </p>
             </div>
           </div>
