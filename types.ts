@@ -32,4 +32,4 @@ export interface RegionalData {
   projects: RegionalProject[];
 }
 
-export type ViewType = 'overview' | 'revenue' | 'expense' | 'regional' | 'participatory' | 'chat';
+export type ViewType = 'overview' | 'revenue' | 'expense' | 'regional' | 'participatory';
