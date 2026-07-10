@@ -112,11 +112,13 @@ export const PROGRAMS: ProgramData[] = [
 
 // Projetos por regional conforme demonstrativos de subprodutos por região da
 // Lei nº 11.615/2025 (LOA 2026). Valores e regionais validados contra o texto oficial.
+// Bairros por regional conforme o Decreto Municipal nº 14.899, de 31/12/2020
+// (divisão de Fortaleza em 12 regionais e 39 territórios).
 export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 1',
     total: 476742636,
-    neighborhoods: ['Barra do Ceará', 'Vila Velha', 'Cristo Redentor', 'Pirambu', 'Floresta', 'Álvaro Weyne'],
+    neighborhoods: ['Álvaro Weyne', 'Barra do Ceará', 'Carlito Pamplona', 'Cristo Redentor', 'Floresta', 'Jacarecanga', 'Jardim Guanabara', 'Jardim Iracema', 'Pirambu', 'Vila Velha'],
     projects: [
       { title: 'ETI Nossa Senhora de Fátima Reformada - Floresta', description: 'Reforma completa da escola no Território 6. Valor: R$ 4,2M.', category: 'Educação' },
       { title: 'CUCA Barra do Ceará Mantido', description: 'Manutenção do equipamento de juventude. Valor: R$ 4,1M.', category: 'Social' },
@@ -128,7 +130,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 2',
     total: 255710324,
-    neighborhoods: ['Meireles', 'Aldeota', 'Mucuripe', 'Papicu', 'Varjota', 'Cais do Porto'],
+    neighborhoods: ['Aldeota', 'Cais do Porto', 'De Lourdes', 'Dionísio Torres', 'Joaquim Távora', 'Meireles', 'Mucuripe', 'Papicu', 'São João do Tauape', 'Varjota', 'Vicente Pinzón'],
     projects: [
       { title: 'CUCA Grande Mucuripe Construído - Cais do Porto', description: 'Novo centro de juventude no Território 9. Valor: R$ 7,3M.', category: 'Social' },
       { title: 'CEI Maria Felício Construído - Cais do Porto', description: 'Nova creche no Território 9. Valor: R$ 2,2M.', category: 'Educação' },
@@ -140,7 +142,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 3',
     total: 276734864,
-    neighborhoods: ['Antônio Bezerra', 'Parquelândia', 'Amadeu Furtado', 'Padre Andrade'],
+    neighborhoods: ['Amadeu Furtado', 'Antônio Bezerra', 'Ellery', 'Farias Brito', 'Monte Castelo', 'Olavo Oliveira', 'Padre Andrade', 'Parque Araxá', 'Parquelândia', 'Presidente Kennedy', 'Quintino Cunha', 'Rodolfo Teófilo', 'São Gerardo'],
     projects: [
       { title: 'UBS Anastácio Magalhães Construído', description: 'Nova unidade de saúde no Território 14. Valor: R$ 1,95M.', category: 'Saúde' },
       { title: 'UBS Construída - Antônio Bezerra', description: 'Nova unidade de saúde. EP/LOM nº 1568/2025. Valor: R$ 1M.', category: 'Saúde' },
@@ -152,7 +154,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 4',
     total: 208751749,
-    neighborhoods: ['Benfica', 'Fátima', 'Montese', 'Parangaba', 'Vila União'],
+    neighborhoods: ['Aeroporto', 'Benfica', 'Bom Futuro', 'Damas', 'Fátima', 'Itaoca', 'Jardim América', 'José Bonifácio', 'Montese', 'Parangaba', 'Parreão', 'Vila Peri', 'Vila União'],
     projects: [
       { title: 'Casa dos Direitos de Parangaba Mantida', description: 'Manutenção do equipamento de direitos humanos. Valor: R$ 2,43M.', category: 'Social' },
       { title: 'Areninha Parreão II Construída', description: 'Nova arena no Território 18. Valor: R$ 1,97M.', category: 'Infraestrutura' },
@@ -164,7 +166,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 5',
     total: 493785956,
-    neighborhoods: ['Conjunto Ceará', 'Granja Lisboa', 'Granja Portugal', 'Bom Jardim', 'Siqueira'],
+    neighborhoods: ['Bom Jardim', 'Bonsucesso', 'Granja Lisboa', 'Granja Portugal', 'Siqueira'],
     projects: [
       { title: 'ETI Francisca Fernandes Magalhães Reformada - Bonsucesso', description: 'Reforma no Território 39. Valor: R$ 550K.', category: 'Educação' },
       { title: 'Espaço Público Urbanizado Comunidade Beira Rio - Bom Jardim', description: 'Urbanização completa. EP/LOM nº 1566/2025. Valor: R$ 500K.', category: 'Urbanismo' },
@@ -178,7 +180,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 6',
     total: 295987059,
-    neighborhoods: ['Messejana', 'Lagoa Redonda', 'Cidade dos Funcionários', 'Jardim das Oliveiras'],
+    neighborhoods: ['Aerolândia', 'Alto da Balança', 'Cambeba', 'Cidade dos Funcionários', 'Coaçu', 'Curió', 'Guajeru', 'Jardim das Oliveiras', 'José de Alencar', 'Lagoa Redonda', 'Messejana', 'Parque Iracema', 'Parque Manibura', 'Paupina', 'São Bento'],
     projects: [
       { title: 'CEI Lagoa Redonda Construído', description: 'Nova creche no Território 29. Valor: R$ 648,9K.', category: 'Educação' },
       { title: 'EEF São Bento Construída', description: 'Nova escola no Território 30. Valor: R$ 350K.', category: 'Educação' },
@@ -191,7 +193,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 7',
     total: 217330136,
-    neighborhoods: ['Praia do Futuro', 'Luciano Cavalcante', 'Edson Queiroz', 'Sabiaguaba'],
+    neighborhoods: ['Cidade 2000', 'Cocó', 'Edson Queiroz', 'Engenheiro Luciano Cavalcante', 'Guararapes', 'Manuel Dias Branco', 'Praia do Futuro I', 'Praia do Futuro II', 'Sabiaguaba', 'Salinas', 'Sapiranga/Coité'],
     projects: [
       { title: 'CEI Luciano Cavalcante Construído', description: 'Nova creche no Território 24. Valor: R$ 1,35M.', category: 'Educação' },
       { title: 'Urbanização Entorno Lagoa da Sapiranga', description: 'Recuperação ambiental. EP/LOM nº 1030/2025. Valor: R$ 50K.', category: 'Urbanismo' },
@@ -203,7 +205,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 8',
     total: 561487654,
-    neighborhoods: ['Passaré', 'José Walter', 'Planalto Ayrton Senna', 'Mondubim'],
+    neighborhoods: ['Boa Vista', 'Dias Macedo', 'Itaperi', 'José Walter', 'Parque Dois Irmãos', 'Passaré', 'Planalto Ayrton Senna', 'Raquel de Queiroz', 'Serrinha'],
     projects: [
       { title: 'ETI Jardim Castelão Construída - Passaré', description: 'Nova escola no Território 20. Valor: R$ 3,3M.', category: 'Educação' },
       { title: 'EEF André Luís Construída - Passaré', description: 'Nova escola no Território 20. Valor: R$ 1,9M.', category: 'Educação' },
@@ -216,7 +218,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 9',
     total: 371475813,
-    neighborhoods: ['Conjunto Palmeiras', 'Jangurussu', 'Ancuri', 'Pedras'],
+    neighborhoods: ['Ancuri', 'Barroso', 'Cajazeiras', 'Conjunto Palmeiras', 'Jangurussu', 'Parque Santa Maria', 'Pedras'],
     projects: [
       { title: 'CEI Cajazeiras Construído', description: 'Nova creche no Território 31. Valor: R$ 600K.', category: 'Educação' },
       { title: 'EEF João Germano da Ponte Neto Reformada - Conjuntos Palmeiras', description: 'Reforma no Território 32. Valor: R$ 300K.', category: 'Educação' },
@@ -228,7 +230,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 10',
     total: 406676210,
-    neighborhoods: ['Maraponga', 'Manoel Sátiro', 'Vila Manoel Sátiro', 'Parque Dois Irmãos'],
+    neighborhoods: ['Aracapé', 'Canindezinho', 'Conjunto Esperança', 'Jardim Cearense', 'Maraponga', 'Mondubim', 'Novo Mondubim', 'Parque Santa Rosa', 'Parque São José', 'Presidente Vargas', 'Vila Manoel Sátiro'],
     projects: [
       { title: 'UBS Parque Santana Construído - Mondubim', description: 'Novo posto de saúde no Território 35. Valor: R$ 3M.', category: 'Saúde' },
       { title: 'Praça Vila Manoel Sátiro Reformada', description: 'Reforma completa. EP/LOM nº 1210/2025. Valor: R$ 174,8K.', category: 'Urbanismo' },
@@ -241,7 +243,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 11',
     total: 397606081,
-    neighborhoods: ['Autran Nunes', 'Dom Lustosa', 'Henrique Jorge', 'João XXIII', 'Pici'],
+    neighborhoods: ['Autran Nunes', 'Bela Vista', 'Conjunto Ceará I', 'Conjunto Ceará II', 'Couto Fernandes', 'Demócrito Rocha', 'Dom Lustosa', 'Genibaú', 'Henrique Jorge', 'João XXIII', 'Jóquei Clube', 'Panamericano', 'Pici'],
     projects: [
       { title: 'Areninha João XXIII Construída', description: 'Nova arena no Território 37. Valor: R$ 4M.', category: 'Infraestrutura' },
       { title: 'ETI Prof. Ademar Nunes Batista Reformada - Conjunto Ceará', description: 'Reforma da escola no Território 38. Valor: R$ 2M.', category: 'Educação' },
@@ -253,7 +255,7 @@ export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 12',
     total: 59402590,
-    neighborhoods: ['Centro', 'Praia de Iracema'],
+    neighborhoods: ['Centro', 'Moura Brasil', 'Praia de Iracema'],
     projects: [
       { title: 'Casa dos Direitos do Centro Mantida', description: 'Manutenção do equipamento de direitos humanos. Valor: R$ 1,43M.', category: 'Social' },
       { title: 'UTI do Hospital IJF Reformada', description: 'Reforma da UTI no Território 1. Valor: R$ 660,9K.', category: 'Saúde' },
