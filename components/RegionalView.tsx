@@ -248,7 +248,7 @@ const RegionalView: React.FC = () => {
                   <div className="p-4 bg-blue-50 border border-blue-100 rounded-2xl flex gap-3">
                     <TrendingUp size={20} className="text-blue-600 shrink-0" />
                     <p className="text-xs text-blue-800 leading-relaxed">
-                      Este plano visa aumentar o IDH-B (Índice de Desenvolvimento Humano por Bairro) desta regional em até <strong>4.2%</strong> até o final de 2026.
+                      Os investimentos regionalizados da LOA 2026 somam <strong>R$ 4,02 bilhões</strong>, distribuídos entre as 12 regionais conforme o demonstrativo oficial de despesa por região.
                     </p>
                   </div>
                 </div>

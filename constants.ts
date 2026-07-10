@@ -110,6 +110,8 @@ export const PROGRAMS: ProgramData[] = [
   },
 ];
 
+// Projetos por regional conforme demonstrativos de subprodutos por região da
+// Lei nº 11.615/2025 (LOA 2026). Valores e regionais validados contra o texto oficial.
 export const REGIONALS: RegionalData[] = [
   {
     name: 'Regional 1',
@@ -117,10 +119,10 @@ export const REGIONALS: RegionalData[] = [
     neighborhoods: ['Barra do Ceará', 'Vila Velha', 'Cristo Redentor', 'Pirambu', 'Floresta', 'Álvaro Weyne'],
     projects: [
       { title: 'ETI Nossa Senhora de Fátima Reformada - Floresta', description: 'Reforma completa da escola no Território 6. Valor: R$ 4,2M.', category: 'Educação' },
-      { title: 'EEF Diogo Vital de Siqueira Reformada e Ampliada - José Walter', description: 'Ampliação da escola no Território 21. Valor: R$ 1,55M.', category: 'Educação' },
-      { title: 'Escola João Nogueira Juca Reformada - Parque Santa Rosa', description: 'Reforma completa. EP/LOM nº 1531/2025. Valor: R$ 100K.', category: 'Educação' },
-      { title: 'Mini Areninha das Goiabeiras Reformada - Barra do Ceará', description: 'Reforma da arena de esportes. EP/LOM nº 1139/2025. Valor: R$ 80K.', category: 'Infraestrutura' },
-      { title: 'Espaços e Parques Públicos Mantidos/Reformados', description: 'Manutenção de áreas de lazer. Valor: R$ 3,97M.', category: 'Urbanismo' }
+      { title: 'CUCA Barra do Ceará Mantido', description: 'Manutenção do equipamento de juventude. Valor: R$ 4,1M.', category: 'Social' },
+      { title: 'Espaços e Parques Públicos Mantidos/Reformados', description: 'Manutenção de áreas de lazer. Valor: R$ 3,97M.', category: 'Urbanismo' },
+      { title: 'Quadra Esportiva Reformada - EM Casimiro José Lima Filho - Barra do Ceará', description: 'Reforma da quadra escolar no Território 3. Valor: R$ 1,48M.', category: 'Infraestrutura' },
+      { title: 'Mini Areninha das Goiabeiras Reformada - Barra do Ceará', description: 'Reforma da arena de esportes. EP/LOM nº 1139/2025. Valor: R$ 80K.', category: 'Infraestrutura' }
     ]
   },
   {
@@ -128,22 +130,22 @@ export const REGIONALS: RegionalData[] = [
     total: 255710324,
     neighborhoods: ['Meireles', 'Aldeota', 'Mucuripe', 'Papicu', 'Varjota', 'Cais do Porto'],
     projects: [
+      { title: 'CUCA Grande Mucuripe Construído - Cais do Porto', description: 'Novo centro de juventude no Território 9. Valor: R$ 7,3M.', category: 'Social' },
       { title: 'CEI Maria Felício Construído - Cais do Porto', description: 'Nova creche no Território 9. Valor: R$ 2,2M.', category: 'Educação' },
       { title: 'Praça da Estiva Reformada - Serviluz', description: 'Reforma completa. EP/LOM nº 1396/2025. Valor: R$ 150K.', category: 'Urbanismo' },
-      { title: 'Praça Árbitro Iran do Vale Reformada - Luciano Cavalcante', description: 'Reforma de praça. EP/LOM nº 1399/2025. Valor: R$ 100K.', category: 'Urbanismo' },
-      { title: 'CUCA Vicente Pinzon Reformado', description: 'Reforma do centro urbano. EP/LOM nº 1405/2025. Valor: R$ 50K.', category: 'Social' },
-      { title: 'Areninha Serviluz Reformada', description: 'Reforma completa. EP/LOM nº 1407/2025. Valor: R$ 100K.', category: 'Infraestrutura' }
+      { title: 'Areninha Serviluz Reformada', description: 'Reforma completa. EP/LOM nº 1407/2025. Valor: R$ 100K.', category: 'Infraestrutura' },
+      { title: 'CUCA Vicente Pinzon Reformado', description: 'Reforma do centro urbano. EP/LOM nº 1405/2025. Valor: R$ 50K.', category: 'Social' }
     ]
   },
   {
     name: 'Regional 3',
     total: 276734864,
-    neighborhoods: ['Antônio Bezerra', 'Pici', 'Parquelândia', 'Amadeu Furtado', 'Padre Andrade'],
+    neighborhoods: ['Antônio Bezerra', 'Parquelândia', 'Amadeu Furtado', 'Padre Andrade'],
     projects: [
-      { title: 'ETI Francisca Fernandes Magalhães Reformada - Bonsucesso', description: 'Reforma no Território 39. Valor: R$ 3,3M.', category: 'Educação' },
+      { title: 'UBS Anastácio Magalhães Construído', description: 'Nova unidade de saúde no Território 14. Valor: R$ 1,95M.', category: 'Saúde' },
+      { title: 'UBS Construída - Antônio Bezerra', description: 'Nova unidade de saúde. EP/LOM nº 1568/2025. Valor: R$ 1M.', category: 'Saúde' },
+      { title: 'Espaço Girassol Construído - Padre Andrade', description: 'Novo equipamento social. EP/LOM nº 1269/2025. Valor: R$ 550K.', category: 'Social' },
       { title: 'ETI Prof. Joaquim Francisco de Sousa Filho Reformada - Presidente Kennedy', description: 'Reforma no Território 12. Valor: R$ 350K.', category: 'Educação' },
-      { title: 'Reforma Lavanderia Comunitária Lourdes Ary - Pici', description: 'Reforma completa. EP/LOM nº 1188/2025. Valor: R$ 300K.', category: 'Social' },
-      { title: 'Praça Vila Manoel Sátiro Reformada', description: 'Reforma completa. EP/LOM nº 1210/2025. Valor: R$ 300K.', category: 'Urbanismo' },
       { title: 'Praça Reformada (Praça Tabajara - Farias Brito)', description: 'Reforma de praça. EP/LOM nº 1312/2025. Valor: R$ 300K.', category: 'Urbanismo' }
     ]
   },
@@ -152,10 +154,10 @@ export const REGIONALS: RegionalData[] = [
     total: 208751749,
     neighborhoods: ['Benfica', 'Fátima', 'Montese', 'Parangaba', 'Vila União'],
     projects: [
-      { title: 'Escola Creusa do Carmo Rocha Reformada - Granja Portugal', description: 'Reforma completa. EP/LOM nº 1080/2025. Valor: R$ 1,41M.', category: 'Educação' },
-      { title: 'Escola Raimundo Soares de Souza Reformada - Vila Peri', description: 'Reforma completa. EP/LOM nº 1081/2025. Valor: R$ 1,41M.', category: 'Educação' },
-      { title: 'EMEIF Irmã Rocha Reformada', description: 'Reforma completa. EP/LOM nº 1134/2025. Valor: R$ 1,41M.', category: 'Educação' },
+      { title: 'Casa dos Direitos de Parangaba Mantida', description: 'Manutenção do equipamento de direitos humanos. Valor: R$ 2,43M.', category: 'Social' },
       { title: 'Areninha Parreão II Construída', description: 'Nova arena no Território 18. Valor: R$ 1,97M.', category: 'Infraestrutura' },
+      { title: 'CEI Antônio Costa Mendes Construído - Vila Peri', description: 'Nova creche no Território 17. Valor: R$ 1,5M.', category: 'Educação' },
+      { title: 'Escola Raimundo Soares de Souza Reformada - Vila Peri', description: 'Reforma. EP/LOM nº 1081/2025. Valor: R$ 100K.', category: 'Educação' },
       { title: 'Areninha da Lagoa da Parangaba Reformada', description: 'Reforma completa. EP/LOM nº 1421/2025. Valor: R$ 100K.', category: 'Infraestrutura' }
     ]
   },
@@ -164,10 +166,12 @@ export const REGIONALS: RegionalData[] = [
     total: 493785956,
     neighborhoods: ['Conjunto Ceará', 'Granja Lisboa', 'Granja Portugal', 'Bom Jardim', 'Siqueira'],
     projects: [
-      { title: 'EEF João Germano da Ponte Neto Reformada - Conjuntos Palmeiras', description: 'Reforma no Território 32. Valor: R$ 550K.', category: 'Educação' },
+      { title: 'ETI Francisca Fernandes Magalhães Reformada - Bonsucesso', description: 'Reforma no Território 39. Valor: R$ 550K.', category: 'Educação' },
+      { title: 'Espaço Público Urbanizado Comunidade Beira Rio - Bom Jardim', description: 'Urbanização completa. EP/LOM nº 1566/2025. Valor: R$ 500K.', category: 'Urbanismo' },
       { title: 'EEF Zacarias Florindo Construída - Granja Portugal', description: 'Nova escola no Território 39. Valor: R$ 350K.', category: 'Educação' },
       { title: 'Creche Construída - Bonsucesso', description: 'Nova creche. EP/LOM nº 1083/2025. Valor: R$ 250K.', category: 'Educação' },
-      { title: 'Espaço Público Urbanizado Comunidade Beira Rio - Bom Jardim', description: 'Urbanização completa. EP/LOM nº 1566/2025. Valor: R$ 500K.', category: 'Urbanismo' },
+      { title: 'Escola Creusa do Carmo Rocha Reformada - Granja Portugal', description: 'Reforma. EP/LOM nº 1080/2025. Valor: R$ 100K.', category: 'Educação' },
+      { title: 'EMEIF Irmã Rocha Reformada', description: 'Reforma. EP/LOM nº 1134/2025. Valor: R$ 100K.', category: 'Educação' },
       { title: 'Santuário de São Pedro Construído - Praça Oliveira Sobrinho', description: 'Nova capela. EP/LOM nº 1107/2025. Valor: R$ 80K.', category: 'Social' }
     ]
   },
@@ -178,8 +182,9 @@ export const REGIONALS: RegionalData[] = [
     projects: [
       { title: 'CEI Lagoa Redonda Construído', description: 'Nova creche no Território 29. Valor: R$ 648,9K.', category: 'Educação' },
       { title: 'EEF São Bento Construída', description: 'Nova escola no Território 30. Valor: R$ 350K.', category: 'Educação' },
-      { title: 'ETI Construída - Bairro Aerolândia', description: 'Nova escola técnica. EP/LOM nº 1515/2025. Valor: R$ 40K.', category: 'Educação' },
+      { title: 'Equipamento Ampliado - Escola João Nogueira Juca', description: 'Ampliação. EP/LOM nº 1550/2025. Valor: R$ 279K.', category: 'Educação' },
       { title: 'Espaço Público Urbanizado Lagoa da Paupina', description: 'Urbanização. EP/LOM nº 1547/2025. Valor: R$ 100K.', category: 'Urbanismo' },
+      { title: 'ETI Construída - Bairro Aerolândia', description: 'Nova escola de tempo integral. EP/LOM nº 1515/2025. Valor: R$ 40K.', category: 'Educação' },
       { title: 'Instalação de Gradil e Calçadas Rua Birmânia - São Bento', description: 'Infraestrutura urbana. EP/LOM nº 1506/2025. Valor: R$ 35K.', category: 'Infraestrutura' }
     ]
   },
@@ -189,10 +194,10 @@ export const REGIONALS: RegionalData[] = [
     neighborhoods: ['Praia do Futuro', 'Luciano Cavalcante', 'Edson Queiroz', 'Sabiaguaba'],
     projects: [
       { title: 'CEI Luciano Cavalcante Construído', description: 'Nova creche no Território 24. Valor: R$ 1,35M.', category: 'Educação' },
-      { title: 'CEI Autran Nunes Construído', description: 'Nova creche no Território 37. Valor: R$ 650K.', category: 'Educação' },
       { title: 'Urbanização Entorno Lagoa da Sapiranga', description: 'Recuperação ambiental. EP/LOM nº 1030/2025. Valor: R$ 50K.', category: 'Urbanismo' },
       { title: 'Urbanização Comunidade da Rocinha - Edson Queiroz', description: 'Urbanização. EP/LOM nº 1031/2025. Valor: R$ 50K.', category: 'Urbanismo' },
-      { title: 'Quiosques Padronizados Pirambu', description: 'Construção de quiosques. EP/LOM nº 1208/2025. Valor: R$ 50K.', category: 'Social' }
+      { title: 'Quadra Esportiva Construída - Escola Irmã Simas - Sapiranga', description: 'Nova quadra. EP/LOM nº 1042/2025. Valor: R$ 50K.', category: 'Infraestrutura' },
+      { title: 'Praça Árbitro Iran do Vale Reformada - Luciano Cavalcante', description: 'Reforma de praça. EP/LOM nº 1399/2025. Valor: R$ 49,1K.', category: 'Urbanismo' }
     ]
   },
   {
@@ -201,10 +206,11 @@ export const REGIONALS: RegionalData[] = [
     neighborhoods: ['Passaré', 'José Walter', 'Planalto Ayrton Senna', 'Mondubim'],
     projects: [
       { title: 'ETI Jardim Castelão Construída - Passaré', description: 'Nova escola no Território 20. Valor: R$ 3,3M.', category: 'Educação' },
-      { title: 'EEF André Luiz Construída - Passaré', description: 'Nova escola no Território 20. Valor: R$ 1,9M.', category: 'Educação' },
+      { title: 'EEF André Luís Construída - Passaré', description: 'Nova escola no Território 20. Valor: R$ 1,9M.', category: 'Educação' },
       { title: 'EEF Diogo Vital de Siqueira Reformada e Ampliada - José Walter', description: 'Ampliação no Território 21. Valor: R$ 1,55M.', category: 'Educação' },
       { title: 'Areninha na Praça 3ª Etapa José Walter Construída', description: 'Nova arena. EP/LOM nº 1403/2025. Valor: R$ 250K.', category: 'Infraestrutura' },
-      { title: 'Hospital Distrital Gonzaga Mota Reformado - José Walter', description: 'Reforma hospitalar. EP/LOM nº 1006/2025.', category: 'Saúde' }
+      { title: 'Hospital Distrital Gonzaga Mota Reformado - José Walter', description: 'Reforma hospitalar. EP/LOM nº 1006/2025. Valor: R$ 200K.', category: 'Saúde' },
+      { title: 'Cultura na Calçada - Jardim União Passaré', description: 'Evento cultural. EP/LOM nº 1447/2025. Valor: R$ 50K.', category: 'Social' }
     ]
   },
   {
@@ -213,10 +219,10 @@ export const REGIONALS: RegionalData[] = [
     neighborhoods: ['Conjunto Palmeiras', 'Jangurussu', 'Ancuri', 'Pedras'],
     projects: [
       { title: 'CEI Cajazeiras Construído', description: 'Nova creche no Território 31. Valor: R$ 600K.', category: 'Educação' },
-      { title: 'CEI Maria Felício Construído - Cais do Porto', description: 'Nova creche no Território 9. Valor: R$ 600K.', category: 'Educação' },
       { title: 'EEF João Germano da Ponte Neto Reformada - Conjuntos Palmeiras', description: 'Reforma no Território 32. Valor: R$ 300K.', category: 'Educação' },
+      { title: 'Praça do Conjunto Palmeiras Reformada e Requalificada', description: 'Reforma completa. EP/LOM nº 1112/2025. Valor: R$ 100K.', category: 'Urbanismo' },
       { title: 'Urbanização Entorno Lagoa São Cristóvão - Jangurussu', description: 'Drenagem e urbanização. EP/LOM nº 1029/2025. Valor: R$ 50K.', category: 'Urbanismo' },
-      { title: 'Praça do Conjunto Palmeiras Reformada e Requalificada', description: 'Reforma completa. EP/LOM nº 1112/2025. Valor: R$ 100K.', category: 'Urbanismo' }
+      { title: 'Cultura na Calçada - Sítio São João Jangurussu', description: 'Evento cultural. EP/LOM nº 1449/2025. Valor: R$ 50K.', category: 'Social' }
     ]
   },
   {
@@ -224,23 +230,24 @@ export const REGIONALS: RegionalData[] = [
     total: 406676210,
     neighborhoods: ['Maraponga', 'Manoel Sátiro', 'Vila Manoel Sátiro', 'Parque Dois Irmãos'],
     projects: [
+      { title: 'UBS Parque Santana Construído - Mondubim', description: 'Novo posto de saúde no Território 35. Valor: R$ 3M.', category: 'Saúde' },
+      { title: 'Praça Vila Manoel Sátiro Reformada', description: 'Reforma completa. EP/LOM nº 1210/2025. Valor: R$ 174,8K.', category: 'Urbanismo' },
       { title: 'Escola João Nogueira Juca Reformada - Parque Santa Rosa', description: 'Reforma. EP/LOM nº 1531/2025. Valor: R$ 100K.', category: 'Educação' },
-      { title: 'Equipamento Ampliado - Escola João Nogueira Juca', description: 'Ampliação. EP/LOM nº 1550/2025. Valor: R$ 100K.', category: 'Educação' },
+      { title: 'Quadra Esportiva Reformada - Escola Viviane Benevides', description: 'Reforma. EP/LOM nº 1102/2025. Valor: R$ 50K.', category: 'Infraestrutura' },
       { title: 'Reforma Praça Igreja N.Sra. das Graças - Vila Manoel Sátiro', description: 'Reforma. EP/LOM nº 1165/2025. Valor: R$ 40K.', category: 'Urbanismo' },
-      { title: 'Micro Parque Implantado', description: 'Novo parque. Valor: R$ 40K.', category: 'Urbanismo' },
       { title: 'Reforma Areninha Campo São Paulo - Vila Manoel Sátiro', description: 'Reforma. EP/LOM nº 1179/2025. Valor: R$ 40K.', category: 'Infraestrutura' }
     ]
   },
   {
     name: 'Regional 11',
     total: 397606081,
-    neighborhoods: ['Autran Nunes', 'Dom Lustosa', 'Henrique Jorge', 'João XXIII', 'Pono do Coruja'],
+    neighborhoods: ['Autran Nunes', 'Dom Lustosa', 'Henrique Jorge', 'João XXIII', 'Pici'],
     projects: [
-      { title: 'Quadra Esportiva Construída - Escola Irmã Simas - Sapiranga', description: 'Nova quadra. EP/LOM nº 1042/2025. Valor: R$ 50K.', category: 'Infraestrutura' },
-      { title: 'Quadra Esportiva Reformada - Escola Viviane Benevides', description: 'Reforma. EP/LOM nº 1102/2025. Valor: R$ 50K.', category: 'Infraestrutura' },
+      { title: 'Areninha João XXIII Construída', description: 'Nova arena no Território 37. Valor: R$ 4M.', category: 'Infraestrutura' },
+      { title: 'ETI Prof. Ademar Nunes Batista Reformada - Conjunto Ceará', description: 'Reforma da escola no Território 38. Valor: R$ 2M.', category: 'Educação' },
+      { title: 'CEI Autran Nunes Construído', description: 'Nova creche no Território 37. Valor: R$ 475K.', category: 'Educação' },
       { title: 'Equipamento Público Construído Regional 11', description: 'Novos equipamentos. EP/LOM nº 1163/2025. Valor: R$ 147,7K.', category: 'Social' },
-      { title: 'Praça da Estiva Reformada - Serviluz', description: 'Reforma. EP/LOM nº 1396/2025. Valor: R$ 50K.', category: 'Urbanismo' },
-      { title: 'Areninha Construída Praça 3ª Etapa José Walter', description: 'Nova arena. EP/LOM nº 1403/2025. Valor: R$ 250K.', category: 'Infraestrutura' }
+      { title: 'Reforma Lavanderia Comunitária Lourdes Ary - Pici', description: 'Reforma completa. EP/LOM nº 1188/2025. Valor: R$ 100K.', category: 'Social' }
     ]
   },
   {
@@ -248,11 +255,11 @@ export const REGIONALS: RegionalData[] = [
     total: 59402590,
     neighborhoods: ['Centro', 'Praia de Iracema'],
     projects: [
-      { title: 'Reforma Igreja do Rosário - Centro', description: 'Restauração. EP/LOM nº 1160/2025. Valor: R$ 100K.', category: 'Urbanismo' },
-      { title: 'Revitalização Cultural do Centro', description: 'Intervenções culturais no Centro Histórico.', category: 'Social' },
-      { title: 'Escola Jesus, Maria e José Conservada', description: 'Manutenção patrimonial.', category: 'Educação' },
-      { title: 'Cultura na Calçada - Jardim União Passaré', description: 'Evento cultural. EP/LOM nº 1447/2025. Valor: R$ 50K.', category: 'Social' },
-      { title: 'Cultura na Calçada - Sítio São João Jangurussu', description: 'Evento cultural. EP/LOM nº 1449/2025.', category: 'Social' }
+      { title: 'Casa dos Direitos do Centro Mantida', description: 'Manutenção do equipamento de direitos humanos. Valor: R$ 1,43M.', category: 'Social' },
+      { title: 'UTI do Hospital IJF Reformada', description: 'Reforma da UTI no Território 1. Valor: R$ 660,9K.', category: 'Saúde' },
+      { title: 'Reforma e Restauração da Igreja do Rosário - Centro', description: 'Restauração. EP/LOM nº 1160/2025. Valor: R$ 500K.', category: 'Urbanismo' },
+      { title: 'Revitalização Cultural do Centro', description: 'Intervenções culturais no Centro Histórico (escopo municipal). Valor: R$ 100K.', category: 'Social' },
+      { title: 'Escola Jesus, Maria e José Conservada', description: 'Conservação patrimonial (escopo municipal). Valor: R$ 100K.', category: 'Educação' }
     ]
   },
 ];

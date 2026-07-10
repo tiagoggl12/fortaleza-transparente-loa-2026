@@ -4,12 +4,12 @@ import { Users, Lightbulb, CheckSquare, MessageSquare } from 'lucide-react';
 
 const ParticipatoryView: React.FC = () => {
   const initiatives = [
-    { title: 'Educação Integral', description: 'Ampliação de escolas de tempo integral nos territórios 5, 8 e 11.', budget: 'R$ 237,1M' },
+    { title: 'Educação Integral', description: 'Melhoria da qualidade da educação básica, incluindo escolas de tempo integral.', budget: 'R$ 237,4M' },
     { title: 'Saúde Digital', description: 'Implementação de pontos de telessaúde em todas as Regionais.', budget: 'R$ 1,9M' },
-    { title: 'Fortaleza Jovem', description: 'Manutenção dos CUCAs e Faróis da Juventude com novos cursos.', budget: 'R$ 51,6M' },
-    { title: 'Proteção Animal', description: 'Novo centro de atendimento e defesa sanitária animal.', budget: 'R$ 7,7M' },
-    { title: 'Urbanismo Sustentável', description: 'Gestão ambiental e recuperação de recursos hídricos.', budget: 'R$ 44,7M' },
-    { title: 'Locação Social', description: 'Auxílio moradia para famílias em vulnerabilidade e vítimas de violência.', budget: 'R$ 8,2M' },
+    { title: 'Fortaleza Jovem', description: 'Manutenção dos CUCAs e Faróis da Juventude com novos cursos.', budget: 'R$ 51,8M' },
+    { title: 'Proteção Animal', description: 'Promoção da defesa sanitária animal e novos equipamentos.', budget: 'R$ 8,2M' },
+    { title: 'Urbanismo Sustentável', description: 'Limpeza urbana e recuperação de recursos hídricos (lagoas e canais).', budget: 'R$ 84,2M' },
+    { title: 'Locação Social', description: 'Auxílio moradia para famílias em vulnerabilidade e vítimas de violência.', budget: 'R$ 8,6M' },
   ];
 
   return (
