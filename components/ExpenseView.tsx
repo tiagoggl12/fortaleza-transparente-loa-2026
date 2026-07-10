@@ -1,43 +1,74 @@
 
-import React from 'react';
-import { 
-  ResponsiveContainer, 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  Tooltip, 
+import React, { useState } from 'react';
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
   CartesianGrid,
-  Legend,
-  Cell,
-  PieChart,
-  Pie
+  LabelList
 } from 'recharts';
 import { PROGRAMS, TOTAL_BUDGET } from '../constants';
-import { Target, Info, ShieldCheck, Briefcase, HelpCircle, GraduationCap, Landmark, Building2, HeartPulse } from 'lucide-react';
+import {
+  Target, Info, ShieldCheck, Briefcase, HelpCircle, GraduationCap,
+  Landmark, Building2, HeartPulse, Wallet, Users, Hammer, CalendarDays,
+  ChevronDown, ChevronUp
+} from 'lucide-react';
 import EnhancedInfoTooltip from './glossary/EnhancedInfoTooltip';
 import { useGlossary } from '../hooks/useGlossary';
 
 const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('pt-BR', { 
-    style: 'currency', 
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
     currency: 'BRL',
     maximumFractionDigits: 0
   }).format(value);
 };
 
-const glossaryDespesas: Record<string, string> = {
-  'Pessoal e Encargos': 'Pagamento de salários, aposentadorias, pensões e impostos sobre a folha dos servidores públicos.',
-  'Manutenção de Serviços (Correntes)': 'Recursos fundamentais para manter os serviços funcionando: merenda, medicamentos, luz, água e limpeza de ruas.',
-  'Investimentos': 'Dinheiro gasto na criação de novos bens, como construir escolas, praças e comprar ambulâncias.',
-  'Juros e Encargos da Dívida': 'Pagamento de taxas sobre empréstimos que a cidade fez no passado.',
-  'Amortização da Dívida': 'Pagamento do valor principal de empréstimos tomados para grandes obras.'
+const formatCompact = (value: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    notation: 'compact',
+    maximumFractionDigits: 2
+  }).format(value);
 };
+
+// Demonstrativo da Despesa por Função — Lei nº 11.615/2025 (LOA 2026).
+// Todas as 23 funções; a soma fecha exatamente nos R$ 15.991.418.235.
+const ALL_FUNCTIONS = [
+  { name: 'Saúde', value: 4319793967 },
+  { name: 'Educação', value: 3919379873 },
+  { name: 'Administração', value: 1654732747 },
+  { name: 'Previdência Social', value: 1579092299 },
+  { name: 'Encargos Especiais', value: 1144707945 },
+  { name: 'Urbanismo', value: 669664592 },
+  { name: 'Saneamento', value: 527366538 },
+  { name: 'Segurança Pública', value: 450294149 },
+  { name: 'Legislativa', value: 363940349 },
+  { name: 'Assistência Social', value: 333821192 },
+  { name: 'Transporte', value: 234026561 },
+  { name: 'Energia', value: 206275037 },
+  { name: 'Cultura', value: 169768531 },
+  { name: 'Gestão Ambiental', value: 135087107 },
+  { name: 'Direitos da Cidadania', value: 80295790 },
+  { name: 'Essencial à Justiça', value: 74562627 },
+  { name: 'Habitação', value: 46037120 },
+  { name: 'Desporto e Lazer', value: 24876481 },
+  { name: 'Comércio e Serviços', value: 21197058 },
+  { name: 'Trabalho', value: 13573000 },
+  { name: 'Reserva de Contingência', value: 12986965 },
+  { name: 'Ciência e Tecnologia', value: 9926307 },
+  { name: 'Judiciária', value: 12000 },
+];
 
 const ExpenseView: React.FC = () => {
   const { openGlossary } = useGlossary();
-  // Despesa por Função de Governo — Demonstrativo da Despesa por Função,
-  // Lei nº 11.615/2025 (LOA 2026). As 6 maiores áreas de aplicação.
+  const [showAllFunctions, setShowAllFunctions] = useState(false);
+
+  // Despesa por Função de Governo — as 6 maiores áreas, com cards detalhados
   const functionBreakdown = [
     { name: 'Saúde', value: 4319793967, icon: <HeartPulse size={14} />, desc: 'Postos, hospitais, medicamentos e vigilância sanitária.' },
     { name: 'Educação', value: 3919379873, icon: <GraduationCap size={14} />, desc: 'Escolas, creches, merenda e material didático.' },
@@ -46,6 +77,9 @@ const ExpenseView: React.FC = () => {
     { name: 'Encargos Especiais', value: 1144707945, icon: <Landmark size={14} />, desc: 'Dívida pública, precatórios e obrigações financeiras.' },
     { name: 'Urbanismo', value: 669664592, icon: <Building2 size={14} />, desc: 'Praças, parques, vias e infraestrutura urbana.' },
   ];
+
+  const remainingFunctions = ALL_FUNCTIONS.slice(6);
+  const maxRemaining = remainingFunctions[0].value;
 
   // Despesa por Grupo de Natureza — todas as categorias, soma = orçamento total
   const mainCategories = [
@@ -58,7 +92,33 @@ const ExpenseView: React.FC = () => {
     { name: 'Inversões Financeiras', value: 4031000 },
   ];
 
-  const COLORS = ['#1d4ed8', '#2563eb', '#3b82f6', '#60a5fa', '#93c5fd'];
+  const PESSOAL = 7638847991;
+  const INVESTIMENTOS = 957552262;
+  const DIVIDA = 468744354 + 429722887; // amortização + juros
+  const POR_DIA = TOTAL_BUDGET / 365;
+
+  const kpis = [
+    {
+      icon: <Wallet size={20} />, tint: 'bg-blue-50 text-blue-600',
+      label: 'Despesa Total Fixada', value: formatCompact(TOTAL_BUDGET),
+      context: 'Igual à receita estimada (Art. 3º da Lei nº 11.615/2025)'
+    },
+    {
+      icon: <Users size={20} />, tint: 'bg-indigo-50 text-indigo-600',
+      label: 'Pessoal e Encargos', value: `${((PESSOAL / TOTAL_BUDGET) * 100).toFixed(1).replace('.', ',')}%`,
+      context: `${formatCompact(PESSOAL)} com salários, aposentadorias e encargos`
+    },
+    {
+      icon: <Hammer size={20} />, tint: 'bg-emerald-50 text-emerald-600',
+      label: 'Investimentos', value: formatCompact(INVESTIMENTOS),
+      context: `${((INVESTIMENTOS / TOTAL_BUDGET) * 100).toFixed(1).replace('.', ',')}% para obras e novos equipamentos`
+    },
+    {
+      icon: <CalendarDays size={20} />, tint: 'bg-amber-50 text-amber-600',
+      label: 'Gasto Médio por Dia', value: formatCompact(POR_DIA),
+      context: 'Orçamento total dividido pelos 365 dias de 2026'
+    },
+  ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
@@ -78,41 +138,68 @@ const ExpenseView: React.FC = () => {
         <div className="absolute top-0 right-0 w-80 h-80 bg-blue-400 rounded-full blur-[100px] opacity-20 -mr-20 -mt-20"></div>
       </div>
 
+      {/* KPIs de Despesa */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {kpis.map((kpi, i) => (
+          <div key={i} className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-all">
+            <div className={`inline-flex p-2 rounded-lg mb-4 ${kpi.tint}`}>
+              {kpi.icon}
+            </div>
+            <p className="text-gray-500 text-xs font-black uppercase tracking-widest">{kpi.label}</p>
+            <h3 className="text-2xl font-black text-gray-900 mt-1">{kpi.value}</h3>
+            <p className="text-[11px] text-gray-400 mt-2 leading-snug">{kpi.context}</p>
+          </div>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Gráfico Principal de Natureza */}
-        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-200 shadow-sm">
+        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-200 shadow-sm flex flex-col">
           <div className="flex justify-between items-center mb-8">
             <div>
               <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest">Estrutura de Despesa</h4>
-              <p className="text-sm font-bold text-gray-800">Divisão Geral do Orçamento</p>
+              <p className="text-sm font-bold text-gray-800">Divisão por Natureza do Gasto</p>
             </div>
-            <HelpCircle size={20} className="text-gray-300" />
+            <EnhancedInfoTooltip term="Grupo de Natureza" definition="Classifica a despesa pelo tipo de gasto: pessoal, custeio dos serviços, investimentos, dívida e reservas." onOpenGlossary={openGlossary}>
+              <HelpCircle size={20} className="text-gray-300" />
+            </EnhancedInfoTooltip>
           </div>
           <div className="h-[350px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={mainCategories} layout="vertical" margin={{ left: 40, right: 30 }}>
+              <BarChart data={mainCategories} layout="vertical" margin={{ left: 40, right: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                 <XAxis type="number" hide />
-                <YAxis 
-                  dataKey="name" 
-                  type="category" 
-                  width={150} 
+                <YAxis
+                  dataKey="name"
+                  type="category"
+                  width={150}
                   tick={{ fontSize: 10, fontWeight: 700, fill: '#64748b' }}
                   axisLine={false}
                   tickLine={false}
                 />
-                <Tooltip 
-                  formatter={(value: number | undefined) => value ? formatCurrency(value) : ''}
+                <Tooltip
+                  formatter={(value: number | undefined) => value
+                    ? [`${formatCurrency(value)} · ${((value / TOTAL_BUDGET) * 100).toFixed(1).replace('.', ',')}% do total`, 'Valor']
+                    : ''}
                   cursor={{ fill: '#f8fafc' }}
                   contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
                 />
-                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={24}>
-                  {mainCategories.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
+                <Bar dataKey="value" fill="#2563eb" radius={[0, 6, 6, 0]} barSize={22}>
+                  <LabelList
+                    dataKey="value"
+                    position="right"
+                    formatter={(v: number) => formatCompact(v)}
+                    style={{ fontSize: 10, fontWeight: 700, fill: '#111827' }}
+                  />
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
+          </div>
+          <div className="mt-4 p-4 bg-gray-50 rounded-2xl border border-gray-100 flex gap-3 items-start">
+            <Info size={18} className="text-gray-400 shrink-0" />
+            <p className="text-[10px] text-gray-500 leading-relaxed">
+              <strong>Leitura rápida:</strong> quase metade do orçamento (47,8%) paga a folha dos servidores; o custeio dos serviços consome 40,5%; investimentos, dívida e reservas completam o total.
+            </p>
           </div>
         </div>
 
@@ -126,28 +213,58 @@ const ExpenseView: React.FC = () => {
 
           <div className="flex-1 space-y-4">
             {functionBreakdown.map((item, idx) => (
-              <div key={idx} className="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-all flex items-center justify-between group">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                    {item.icon}
+              <div key={idx} className="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-all group">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h6 className="text-sm font-black text-gray-800">{item.name}</h6>
+                      <p className="text-[10px] text-gray-500 max-w-[200px] leading-tight">{item.desc}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h6 className="text-sm font-black text-gray-800">{item.name}</h6>
-                    <p className="text-[10px] text-gray-500 max-w-[200px] leading-tight">{item.desc}</p>
+                  <div className="text-right">
+                    <p className="text-sm font-black text-blue-700">{formatCurrency(item.value)}</p>
+                    <p className="text-[10px] font-bold text-blue-400">{((item.value / TOTAL_BUDGET) * 100).toFixed(1).replace('.', ',')}% do Orçamento</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm font-black text-blue-700">{formatCurrency(item.value)}</p>
-                  <p className="text-[10px] font-bold text-blue-400">{( (item.value / TOTAL_BUDGET) * 100).toFixed(1)}% do Orçamento</p>
+                <div className="mt-3 h-1.5 w-full bg-blue-50 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(item.value / functionBreakdown[0].value) * 100}%` }} />
                 </div>
               </div>
             ))}
           </div>
 
+          {/* Demais funções — lista completa expansível */}
+          <button
+            type="button"
+            onClick={() => setShowAllFunctions(!showAllFunctions)}
+            className="mt-4 w-full py-3 bg-white hover:bg-blue-600 border border-blue-200 hover:border-blue-600 text-blue-600 hover:text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2"
+          >
+            {showAllFunctions ? 'Ocultar demais funções' : `Ver as outras ${remainingFunctions.length} funções`}
+            {showAllFunctions ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          </button>
+
+          {showAllFunctions && (
+            <div className="mt-4 bg-white rounded-2xl border border-blue-100 divide-y divide-gray-50 overflow-hidden">
+              {remainingFunctions.map((f, i) => (
+                <div key={i} className="px-4 py-2.5 flex items-center gap-3">
+                  <span className="text-xs font-bold text-gray-700 w-40 shrink-0 leading-tight">{f.name}</span>
+                  <div className="flex-1 h-1.5 bg-gray-50 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-400 rounded-full" style={{ width: `${Math.max((f.value / maxRemaining) * 100, 1)}%` }} />
+                  </div>
+                  <span className="text-xs font-black text-gray-900 w-20 text-right shrink-0">{formatCompact(f.value)}</span>
+                  <span className="text-[10px] font-bold text-gray-400 w-12 text-right shrink-0">{((f.value / TOTAL_BUDGET) * 100).toFixed(1).replace('.', ',')}%</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="mt-6 p-4 bg-white rounded-2xl border border-blue-100 flex gap-3 items-start">
             <Info size={20} className="text-blue-500 shrink-0" />
             <p className="text-[10px] text-gray-600 leading-relaxed italic">
-              <strong>Entenda:</strong> Saúde e Educação, juntas, concentram mais da metade do orçamento (51,5%). As demais funções — como Saneamento, Segurança Pública, Assistência Social e Cultura — completam o total de R$ 15,99 bilhões.
+              <strong>Entenda:</strong> Saúde e Educação, juntas, concentram mais da metade do orçamento (51,5%). As 23 funções somam exatamente o total de R$ 15,99 bilhões fixado na lei.
             </p>
           </div>
         </div>
@@ -166,7 +283,10 @@ const ExpenseView: React.FC = () => {
           {PROGRAMS.map((p) => (
             <div key={p.id} className="bg-white p-6 rounded-3xl border border-gray-200 hover:border-blue-300 transition-all group shadow-sm flex flex-col">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-[10px] font-black bg-gray-100 text-gray-500 px-2 py-1 rounded uppercase tracking-widest">Cod. {p.id}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black bg-gray-100 text-gray-500 px-2 py-1 rounded uppercase tracking-widest">Cod. {p.id}</span>
+                  <span className="text-[10px] font-black bg-blue-50 text-blue-600 px-2 py-1 rounded uppercase tracking-widest">{((p.total / TOTAL_BUDGET) * 100).toFixed(1).replace('.', ',')}% do orçamento</span>
+                </div>
                 <span className="text-sm font-black text-blue-700">{formatCurrency(p.total)}</span>
               </div>
               <h5 className="font-bold text-gray-900 text-lg mb-2 group-hover:text-blue-600 transition-colors">{p.name}</h5>
